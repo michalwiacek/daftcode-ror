@@ -10,14 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_30_152959) do
+ActiveRecord::Schema.define(version: 2018_05_04_075525) do
 
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.boolean "admin", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "manager_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["manager_id"], name: "index_users_on_manager_id"
   end
 
 end

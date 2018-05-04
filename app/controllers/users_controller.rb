@@ -1,11 +1,9 @@
 class UsersController < ApplicationController
-end
-class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :admin_check, only: [:update, :destroy]
   
   def index
-    render json: User.where(admin: false)
+    render json: User.all #where(admin: false)
   end
 
   def show
@@ -14,20 +12,24 @@ class UsersController < ApplicationController
   
   def create
     user = User.create!(user_params)
-    render json: user
+    if user.save
+      render json: user, status: 201
+    else 
+      redner json: user, serializer: UserErrorSerializer, status: 422
+    end
   end
   
   def update
     if user.update(user_params)
       render json: user
     else
-      render json: user, serializer: UserErrorsSerializer, status: 422
+      render json: user, serializer: UserErrorSerializer, status: 422
     end
   end
   
   def destroy
     user.destroy!
-    render json: user, status: user.destroyed? ? 200 : 422
+    render json: user, status: user.destroyed? ? 204 : 500
   end
   
   private

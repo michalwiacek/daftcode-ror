@@ -6,4 +6,5 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-10.times { |t| User.find_or_create_by(email: "qwe#{t}@qwe.qwe") }
+#10.times { |t| User.find_or_create_by(email: "qwe#{t}@qwe.qwe") }
+10.times { |t| User.find_or_create_by(email: "qwa#{t}@qwa.qwa", admin: true) }
