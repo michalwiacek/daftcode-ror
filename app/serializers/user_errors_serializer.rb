@@ -1,12 +1,16 @@
 class UserErrorsSerializer < ActiveModel::Serializer
+  attribute :method
   attributes :errors, :message
-  
+
   def errors
     object.errors.count
   end
 
   def message
-    "stoopid"
+    object.errors
   end
-  
+
+  def method
+    "trying to #{@instance_options[:method_name]}"
+  end
 end

@@ -11,11 +11,11 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.create!(user_params)
+    @user = User.create(user_params)
     if @user.save
       render json: user, status: 201
     else
-      render json: user, serializer: UserErrorsSerializer, status: 422
+      render json: user, serializer: UserErrorsSerializer, method_name: 'create', status: 422
     end
   end
 
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       render json: user
     else
-      render json: user, serializer: UserErrorsSerializer, status: 422
+      render json: user, serializer: UserErrorsSerializer, method_name: 'update', status: 422
     end
   end
 
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
 
   def user_params
     #ActiveModelSerializers::Deserialization.jsonapi_parse(params, [:email, :admin])
-    params.require(:user).permit(:email, :admin)
+    params.require(:user).permit(:email, :admin, :manager_id)
   end
 
   def admin_check
